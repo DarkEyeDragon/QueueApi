@@ -10,12 +10,35 @@
     <packaging>jar</packaging>
 
     <name>QueueApi</name>
+    <url>https://github.com/DarkEyeDragon/QueueApi</url>
+    <description>A simple Queue implementation library for Minecraft</description>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>DarkEyeDragon</name>
+            <email>darkeyedragon@gmail.com</email>
+            <organization>me.darkeyedragon</organization>
+            <organizationUrl>https://github.com/DarkEyeDragon</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/DarkEyeDragon/QueueApi.git</connection>
+        <developerConnection>scm:git:ssh://github.com:DarkEyeDragon/QueueApi.git</developerConnection>
+        <url>https://github.com/DarkEyeDragon/QueueApi/tree/master</url>
+    </scm>
 
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
     <build>
         <defaultGoal>clean package</defaultGoal>
         <plugins>

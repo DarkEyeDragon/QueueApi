@@ -16,20 +16,20 @@ public class ScheduleHandler {
         this.currentCountDown = queue.getCountDownTime();
     }
 
-public void startCountDown() {
-    isRunning = true;
-    bukkitTask = Bukkit.getServer().getScheduler().runTaskTimer(queue.getQueueApi(), () -> {
-        if(currentCountDown % 60 == 0){
-            for (Player player : queue.getPlayerList()) {
-                player.sendMessage("Yeet "+currentCountDown/60);
+    public void startCountDown() {
+        isRunning = true;
+        bukkitTask = Bukkit.getServer().getScheduler().runTaskTimer(queue.getQueueApi(), () -> {
+            if (currentCountDown % 60 == 0) {
+                for (Player player : queue.getPlayerList()) {
+                    player.sendMessage("Yeet " + currentCountDown / 60);
+                }
             }
-        }
-        if(currentCountDown <= 0){
-            cancelTimer();
-        }
-        currentCountDown--;
-    }, 0, 20);
-}
+            if (currentCountDown <= 0) {
+                cancelTimer();
+            }
+            currentCountDown--;
+        }, 0, 20);
+    }
 
     public void cancelTimer() {
         bukkitTask.cancel();
