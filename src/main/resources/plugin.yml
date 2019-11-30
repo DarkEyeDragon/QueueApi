@@ -1,0 +1,5 @@
+name: QueueApi
+version: ${project.version}
+main: me.darkeyedragon.queueapi.QueueApi
+api-version: 1.13
+authors: [DarkEyeDragon]
