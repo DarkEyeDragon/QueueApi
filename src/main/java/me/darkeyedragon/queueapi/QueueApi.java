@@ -6,7 +6,6 @@ public final class QueueApi extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
     }
 
     @Override

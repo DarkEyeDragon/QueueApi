@@ -41,7 +41,7 @@ public class Queue {
         return maxSize;
     }
 
-    public Set<Player> getPlayerList() {
+    public Set<Player> getPlayers() {
         return playerList;
     }
 
