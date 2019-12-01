@@ -19,7 +19,7 @@ public class ScheduleHandler {
 
     public void startCountDown() {
         isRunning = true;
-        bukkitTask = Bukkit.getServer().getScheduler().runTaskTimer(queue.getQueueApi(), () -> {
+        bukkitTask = Bukkit.getServer().getScheduler().runTaskTimer(queue.getJavaPlugin(), () -> {
             String message = null;
             if (currentCountDown == 0) {
                 message = ChatColor.GREEN + "" + ChatColor.BOLD + "Game is starting!";

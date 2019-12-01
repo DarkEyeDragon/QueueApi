@@ -1,7 +1,7 @@
 package me.darkeyedragon.queueapi.queue;
 
-import me.darkeyedragon.queueapi.QueueApi;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,21 +11,21 @@ public class Queue {
     private final int maxSize;
     private final long countDownTime;
     private Set<Player> playerList = new HashSet<>();
-    private QueueApi queueApi;
+    private JavaPlugin javaPlugin;
 
     /**
      * @param maxSize The maximum amount of players allowed in the queue
-     * @param queueApi the {@link QueueApi} instance
+     * @param javaPlugin the {@link JavaPlugin} instance
      * @param countdownTime countdown timer in seconds
      */
-    public Queue(int maxSize, QueueApi queueApi, long countdownTime) {
+    public Queue(int maxSize, JavaPlugin javaPlugin, long countdownTime) {
         this.maxSize = maxSize;
-        this.queueApi = queueApi;
+        this.javaPlugin = javaPlugin;
         this.countDownTime =countdownTime;
     }
 
-    public Queue(QueueApi queueApi, long time) {
-        this(-1, queueApi, time);
+    public Queue(JavaPlugin javaPlugin, long time) {
+        this(-1, javaPlugin, time);
     }
 
     public void add(Player player) throws MaxSizeExceeded {
@@ -45,8 +45,8 @@ public class Queue {
         return playerList;
     }
 
-    public QueueApi getQueueApi() {
-        return queueApi;
+    public JavaPlugin getJavaPlugin() {
+        return javaPlugin;
     }
 
     public long getCountDownTime() {
