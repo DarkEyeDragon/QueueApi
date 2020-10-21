@@ -1,69 +1,45 @@
 package me.darkeyedragon.queueapi.queue;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
-public class ScheduleHandler {
+import java.util.Optional;
 
-    private final Queue queue;
-    private boolean isRunning;
-    private BukkitTask bukkitTask;
-    private long currentCountDown;
+/**
+ * Handles scheduling for displaying a countdown to a {@link Queue} of players.
+ */
+public interface ScheduleHandler {
+    /**
+     * Starts the scheduled countdown.
+     */
+    void startCountdown();
 
-    public ScheduleHandler(Queue queue) {
-        this.queue = queue;
-        this.currentCountDown = queue.getCountDownTime();
-    }
+    /**
+     * Cancels the timer, if already running.
+     */
+    void cancelTimer();
 
-    public void startCountDown() {
-        isRunning = true;
-        bukkitTask = Bukkit.getServer().getScheduler().runTaskTimer(queue.getJavaPlugin(), () -> {
-            String message = null;
-            if (currentCountDown == 0) {
-                message = ChatColor.GREEN + "" + ChatColor.BOLD + "Game is starting!";
-            } else if ((currentCountDown < 60 && currentCountDown % 20 == 0) || (currentCountDown <= 5)) {
-                message = ChatColor.YELLOW + "" + ChatColor.BOLD + "Game starts in " + currentCountDown + " seconds";
-            } else if (currentCountDown % 60 == 0) {
-                if (currentCountDown != 60) {
-                    message = ChatColor.YELLOW + "" + ChatColor.BOLD + "Game starts in " + currentCountDown / 60 + " minutes";
-                } else {
-                    message = ChatColor.YELLOW + "" + ChatColor.BOLD + "Game starts in " + currentCountDown / 60 + " minute";
-                }
-            }
+    /**
+     * Checks if the countdown has been started {@link #startCountdown()} and is actively running.
+     * @return If the countdown is running
+     */
+    boolean isRunning();
 
-            if (message != null) {
-                for (Player player : queue.getPlayers()) {
-                    player.sendMessage(message);
-                }
-            }
+    /**
+     * Gets the created {@link Queue} being used.
+     * @return The {@link Queue}
+     */
+    Queue getQueue();
 
-            if (currentCountDown <= 0) {
-                cancelTimer();
-            }
-            currentCountDown--;
-        }, 0, 20);
-    }
+    /**
+     * Gets the {@link BukkitTask} containing the countdown. The {@link Optional} will be empty if the task is not
+     * running.
+     * @return An {@link Optional} of the countdown {@link BukkitTask}, if running
+     */
+    Optional<BukkitTask> getCountdownTask();
 
-    public void cancelTimer() {
-        bukkitTask.cancel();
-        isRunning = false;
-    }
-
-    public boolean isRunning() {
-        return isRunning;
-    }
-
-    public Queue getQueue() {
-        return queue;
-    }
-
-    public BukkitTask getBukkitTask() {
-        return bukkitTask;
-    }
-
-    public long getCurrentCountDown() {
-        return currentCountDown;
-    }
+    /**
+     * Gets the current remaining seconds of the countdown.
+     * @return The remaining seconds of the countdown
+     */
+    long getCurrentCountdown();
 }
