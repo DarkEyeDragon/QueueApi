@@ -3,57 +3,60 @@ package me.darkeyedragon.queueapi.queue;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashSet;
 import java.util.Set;
 
-public class Queue {
-
-    private final int maxSize;
-    private final long countDownTime;
-    private Set<Player> playerList = new HashSet<>();
-    private JavaPlugin javaPlugin;
+/**
+ * A game queue, with an optional maximum player limit. This is not a conventional "Queue", it is unordered
+ * and is essentially a managed Set of players. It is used directly by {@link GameScheduleHandler}.
+ */
+public interface Queue {
+    /**
+     * Adds a {@link Player} to the queue.
+     * @param player The {@link Player} to add
+     * @throws MaxSizeExceeded If adding the player would exceed the maximum size
+     */
+    void add(Player player) throws MaxSizeExceeded;
 
     /**
-     * @param maxSize The maximum amount of players allowed in the queue
-     * @param javaPlugin the {@link JavaPlugin} instance
-     * @param countdownTime countdown timer in seconds
+     * Removes a given {@link Player} from the queue.
+     * @param player The {@link Player} to remove
      */
-    public Queue(int maxSize, JavaPlugin javaPlugin, long countdownTime) {
-        this.maxSize = maxSize;
-        this.javaPlugin = javaPlugin;
-        this.countDownTime =countdownTime;
-    }
+    void remove(Player player);
 
-    public Queue(JavaPlugin javaPlugin, long time) {
-        this(-1, javaPlugin, time);
-    }
+    /**
+     * Checks if the queue contains the given {@link Player}.
+     * @param player The {@link Player} to check
+     * @return If the queue contains the given {@link Player}
+     */
+    boolean contains(Player player);
 
-    public void add(Player player) throws MaxSizeExceeded {
-        if(maxSize != -1 && playerList.size()+1 > maxSize) throw new MaxSizeExceeded();
-        playerList.add(player);
-    }
+    /**
+     * Gets the maximum size of the queue set in the constructor, returning -1 for no upper bound.
+     * @return The maximum size of the queue
+     */
+    int getMaxSize();
 
-    public boolean contains(Player player){
-        return playerList.contains(player);
-    }
+    /**
+     * Checks if a maximum size was set in the constructor.
+     * @return If a maximum size has been set
+     */
+    boolean hasMaxSize();
 
-    public int getMaxSize() {
-        return maxSize;
-    }
+    /**
+     * Gets all {@link Player}s in the queue.
+     * @return A set of {@link Player}s
+     */
+    Set<Player> getPlayers();
 
-    public Set<Player> getPlayers() {
-        return playerList;
-    }
+    /**
+     * Gets the {@link JavaPlugin} used.
+     * @return The {@link JavaPlugin}
+     */
+    JavaPlugin getJavaPlugin();
 
-    public JavaPlugin getJavaPlugin() {
-        return javaPlugin;
-    }
-
-    public long getCountDownTime() {
-        return countDownTime;
-    }
-
-    public boolean hasMaxSize(){
-        return maxSize > 0;
-    }
+    /**
+     * Gets the countdown time (set in the constructor) in seconds.
+     * @return The countdown time
+     */
+    long getCountdownTime();
 }
